@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "rocketA";
-    public final String TEAM = "2";
+    public  String TEAM = "2";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -33,15 +33,24 @@ public class AI {
      * @param config Configuration de la grille de jeu
      * @throws org.json.JSONException
      */
+    
+    public AI(int i){
+        if(i < 1){
+            TEAM = 1 + "";
+        }
+        else{
+            TEAM = 2 + "";
+        }
+    }
     public void start(JSONObject config) throws JSONException {
-        System.out.println("Joueurs : " + config.getJSONArray("players"));
+        //System.out.println("Joueurs : " + config.getJSONArray("players"));
 
-        System.out.println("Obstacles : " + config.getJSONArray("obstacles"));
+      //  System.out.println("Obstacles : " + config.getJSONArray("obstacles"));
 
-        System.out.print("Taille de la grille : ");
-        System.out.println(config.getInt("w") + " x " + config.getInt("h"));
+       // System.out.print("Taille de la grille : ");
+      //  System.out.println(config.getInt("w") + " x " + config.getInt("h"));
 
-        System.out.println("Votre identifiant : " + config.getString("me"));
+       // System.out.println("Votre identifiant : " + config.getString("me"));
 
         //Initialisation de la map
         map = new boolean[config.getInt("w")][config.getInt("h")];
@@ -66,7 +75,7 @@ public class AI {
         snakes = new SnakeObject[config.getJSONArray("players").length()];
         for (int i = 0; i < snakes.length; i++) {
             int temp = Integer.valueOf(config.getJSONArray("players").getJSONObject(i).getString("id")) - 1;
-            System.out.println(temp);
+           // System.out.println(temp);
             snakes[temp] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
                     config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
         }
