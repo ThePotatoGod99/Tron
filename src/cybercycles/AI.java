@@ -54,6 +54,7 @@ public class AI {
 
         // Choisis une direction au hasard
         direction = directions[random.nextInt(directions.length)];
+        
         System.out.println("Mouvement choisi : " + direction);
 
         return direction;
