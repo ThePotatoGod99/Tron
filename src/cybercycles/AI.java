@@ -10,13 +10,16 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "rocketA";
-    public final String TEAM = "2";
+    public final String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
     public char direction;
 
     //Informations de la map
+    public int selfIndice;
+    public int[] allyIndice;
+    public int[] enemyIndice;
     public boolean[][] map;
     public SnakeObject snakes[];
 
@@ -56,17 +59,43 @@ public class AI {
         }
 
         //Initialisation des snakes
-        snakes = new SnakeObject[config.getJSONObject("players").length()];
-
+        snakes = new SnakeObject[config.getJSONArray("players").length()];
         for(int i = 0; i < snakes.length; i++){
             snakes[i] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
                     config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
         }
 
-        System.out.println(snakes[0]);
-        System.out.println(snakes[1]);
-        System.out.println(snakes[2]);
-        System.out.println(snakes[3]);
+        for(int i = 0; i < snakes.length; i++){
+            if(snakes[i].getID().equals(config.getJSONObject("me"))){
+                this.selfIndice = i;
+            }
+        }
+
+        for(int i = 0; i < snakes.length; i++){
+            if(snakes[i].getID() == snakes[selfIndice].getID()){
+                continue;
+            } else if(snakes[i].getTEAM() == snakes[selfIndice].getTEAM()){
+                int[] temp = new int[allyIndice.length + 1];
+
+                for(int j = 0; j < allyIndice.length; j++){
+                    temp[j] = allyIndice[j];
+                }
+
+                temp[allyIndice.length] = i;
+
+                allyIndice = temp;
+            } else {
+                int[] temp = new int[enemyID.length + 1];
+
+                for(int j = 0; j < enemyID.length; j++){
+                    temp[j] = enemyID[j];
+                }
+
+                temp[enemyID.length] = i;
+
+                enemyID = temp;
+            }
+        }
     }
 
     /**
