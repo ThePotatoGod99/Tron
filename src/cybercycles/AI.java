@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class AI {
     //Allo
     /* Configuration */
-    public final String ROOM = "rocketA";
+    public final String ROOM = "HOasdfadsLA";
     public  String TEAM = "2";
 
     /* Déplacement de l'A.I. */
@@ -35,7 +35,7 @@ public class AI {
      */
     
     public AI(int i){
-        if(i < 1){
+        if(i <= 1){
             TEAM = 1 + "";
         }
         else{
@@ -152,6 +152,22 @@ public class AI {
                 }
             }
 
+            
+            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+            switch(direction){
+                case 1:
+                    direction = 'r';
+                    break;
+                case 2:
+                    direction = 'l';
+                    break;
+                case 3:
+                    direction = 'u';
+                    break;
+                case 4:
+                    direction = 'd';
+                    break;
+            }
             //Mid game
             {
 
