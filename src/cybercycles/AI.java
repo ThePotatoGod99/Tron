@@ -16,6 +16,12 @@ public class AI {
     public final char[] directions = {'u', 'l', 'd', 'r'};
     public char direction;
 
+    //Informations de la map
+    public final int SELF = 0, ALLY = 1, ENEMY1 = 2, ENEMY2 = 3;
+    public final int X = 0, Y = 1;
+    public boolean[][] map;
+    public int snakePosition[][] = new int[4][2];
+
     Random random = new Random();
 
     /**
@@ -33,6 +39,11 @@ public class AI {
         System.out.println(config.getInt("w") + " x " + config.getInt("h"));
 
         System.out.println("Votre identifiant : " + config.getString("me"));
+
+        //Initialisation de la map
+        map = new boolean[config.getInt("w")][config.getInt("h")];
+
+        //Initialisation des snakes
     }
 
     /**
