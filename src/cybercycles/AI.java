@@ -65,7 +65,9 @@ public class AI {
         //Initialisation des snakes
         snakes = new SnakeObject[config.getJSONArray("players").length()];
         for (int i = 0; i < snakes.length; i++) {
-            snakes[i] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
+            int temp = Integer.valueOf(config.getJSONArray("players").getJSONObject(i).getString("id")) - 1;
+            System.out.println(temp);
+            snakes[temp] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
                     config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
         }
 
@@ -105,8 +107,6 @@ public class AI {
         for (int i = 0; i < snakes.length; i++) {
             map[snakes[i].getX()][snakes[i].getY()] = true;
         }
-
-        //imprimerMap();
     }
 
     /**
@@ -127,39 +127,26 @@ public class AI {
         //Update la map et la position des snakes
         {
             if(!firstTime) {
-                for (int i = 0; i < snakes.length; i++) {
-                    if(!snakes[i].isDead()) {
-                        switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
-                            case 'u':
-                                snakes[i].setY(snakes[i].getY() - 1);
-                                break;
-                            case 'l':
-                                snakes[i].setX(snakes[i].getX() - 1);
-                                break;
-                            case 'd':
-                                snakes[i].setY(snakes[i].getY() + 1);
-                                break;
-                            case 'r':
-                                snakes[i].setX(snakes[i].getX() + 1);
-                                break;
-                        }
+                for(int i = 0; i < prevMoves.length(); i++){
+                    int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
 
-                        if (snakes[i].getX() >= 0 && snakes[i].getX() < map.length && snakes[i].getY() >= 0 && snakes[i].getY() < map[0].length) {
-                            if (map[snakes[i].getX()][snakes[i].getY()]) {
-                                snakes[i].kill();
-                                continue;
-                            }
+                    switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
+                        case 'u':
+                            snakes[index - 1].setY(snakes[index - 1].getY() - 1);
+                            break;
+                        case 'l':
+                            snakes[index - 1].setX(snakes[index - 1].getX() - 1);
+                            break;
+                        case 'd':
+                            snakes[index - 1].setY(snakes[index - 1].getY() + 1);
+                            break;
+                        case 'r':
+                            snakes[index - 1].setX(snakes[index - 1].getX() + 1);
+                            break;
+                    }
 
-                            for (int j = 0; j < snakes.length; j++) {
-                                if (!(i == j) && snakes[i].getX() == snakes[j].getX() && snakes[i].getX() == snakes[j].getX()) {
-                                    snakes[i].kill();
-                                }
-                            }
-                        }
-
-                        if (snakes[i].getX() >= 0 && snakes[i].getX() < map.length && snakes[i].getY() >= 0 && snakes[i].getY() < map[0].length) {
-                            map[snakes[i].getX()][snakes[i].getY()] = true;
-                        }
+                    if (snakes[index - 1].getX() >= 0 && snakes[index - 1].getX() < map.length && snakes[index - 1].getY() >= 0 && snakes[index - 1].getY() < map[0].length) {
+                        map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
                     }
                 }
             }
