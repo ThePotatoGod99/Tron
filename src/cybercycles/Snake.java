@@ -24,8 +24,10 @@ public class Snake{
         destination = new Point(0, 0);
         position = new Point(0, 0);
     }
-    public boolean calculatePath(int xInit, int yInit, int xFinal, int yFinal, boolean[][] jeu){
+  //  public boolean calculatePath(int xInit, int yInit, int xFinal, int yFinal, boolean[][] jeu){
     
+    public void calculatePath(int xInit, int yInit){
+
         int w = jeu.length;
         int h = jeu[0].length;
         boolean possible = false;
@@ -63,7 +65,7 @@ public class Snake{
     public void setDestination(int x, int y){
         destination.set(x, y);
     }
-    
+
     public class Point{
         public int x, y;
         

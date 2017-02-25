@@ -17,11 +17,8 @@ public class AI {
     public char direction;
 
     //Informations de la map
-    public final int X = 0, Y = 1;
     public boolean[][] map;
-    public int snakePosition[];
-    public int allyPosition[][];
-    public int enemyPosition[][];
+    public SnakeObject snakes[];
 
     Random random = new Random();
 
@@ -59,7 +56,17 @@ public class AI {
         }
 
         //Initialisation des snakes
-        snakePosition = new int[2];
+        snakes = new SnakeObject[config.getJSONObject("players").length()];
+
+        for(int i = 0; i < snakes.length; i++){
+            snakes[i] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
+                    config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
+        }
+
+        System.out.println(snakes[0]);
+        System.out.println(snakes[1]);
+        System.out.println(snakes[2]);
+        System.out.println(snakes[3]);
     }
 
     /**
