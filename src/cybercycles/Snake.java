@@ -25,9 +25,8 @@ public class Snake{
         position = new Point(0, 0);
     }
     
-    public void calculatePath(int xInit, int yInit,){
-        int
-        
+    public void calculatePath(int xInit, int yInit){
+
     }
     
     public char getNextMove(){
@@ -41,7 +40,7 @@ public class Snake{
     public void setDestination(int x, int y){
         destination.set(x, y);
     }
-    
+
     public class Point{
         public int x, y;
         
