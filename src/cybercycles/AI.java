@@ -85,15 +85,15 @@ public class AI {
 
                 allyIndice = temp;
             } else {
-                int[] temp = new int[enemyID.length + 1];
+                int[] temp = new int[enemyIndice.length + 1];
 
-                for(int j = 0; j < enemyID.length; j++){
-                    temp[j] = enemyID[j];
+                for(int j = 0; j < enemyIndice.length; j++){
+                    temp[j] = enemyIndice[j];
                 }
 
-                temp[enemyID.length] = i;
+                temp[enemyIndice.length] = i;
 
-                enemyID = temp;
+                enemyIndice = temp;
             }
         }
     }
