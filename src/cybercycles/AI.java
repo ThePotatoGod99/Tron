@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AI {
-
+    //Allo
     /* Configuration */
     public final String ROOM = "rocket";
     public final String TEAM = "1";
@@ -43,7 +43,7 @@ public class AI {
      * @throws org.json.JSONException
      */
     public char next(JSONArray prevMoves) throws JSONException {
-        System.out.print("Mouvements précdents : ");
+        System.out.print("Mouvements précédents : ");
 
         for (int i = 0; i < prevMoves.length(); i++) {
             JSONObject prevMove = prevMoves.getJSONObject(i);
