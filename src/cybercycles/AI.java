@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class AI {
     //Allo
     /* Configuration */
-    public final String ROOM = "HOasdfadsLA";
+    public final String ROOM = "teamRocket";
     public  String TEAM = "2";
 
     /* Déplacement de l'A.I. */
@@ -35,7 +35,8 @@ public class AI {
      */
     
     public AI(int i){
-        if(i <= 1){
+        if(i==0){}
+        else if(i <= 1){
             TEAM = 1 + "";
         }
         else{
