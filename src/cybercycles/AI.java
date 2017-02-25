@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "teamRocket";
-    public  String TEAM = "2";
+    public  String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -35,13 +35,16 @@ public class AI {
      */
     
     public AI(int i){
-        if(i==0){}
+        if(i==0){
+            
+        }
         else if(i <= 1){
             TEAM = 1 + "";
         }
         else{
             TEAM = 2 + "";
         }
+        System.out.println(TEAM);
     }
     public void start(JSONObject config) throws JSONException {
         //System.out.println("Joueurs : " + config.getJSONArray("players"));
