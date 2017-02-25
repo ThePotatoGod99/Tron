@@ -1,7 +1,6 @@
 package cybercycles;
 
 public class SnakeObject {
-    private boolean isDead;
     private int x, y;
     private final String ID, TEAM;
 
@@ -27,10 +26,6 @@ public class SnakeObject {
     public void setY(int y) {
         this.y = y;
     }
-
-    public boolean isDead(){ return isDead; }
-
-    public void kill(){ isDead = true; }
 
     public String getID(){ return ID; }
 
