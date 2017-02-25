@@ -24,10 +24,32 @@ public class Snake{
         destination = new Point(0, 0);
         position = new Point(0, 0);
     }
+    public boolean calculatePath(int xInit, int yInit, int xFinal, int yFinal, boolean[][] jeu){
     
-    public void calculatePath(int xInit, int yInit,){
-        int
+        int w = jeu.length;
+        int h = jeu[0].length;
+        boolean possible = false;
         
+        if (xInit >= w || xInit < 0 || yInit  >= h || yInit < 0){
+            possible = false;
+        } else {
+            if(xInit == xFinal && yInit == yFinal){
+                possible = true;
+            } else {
+                if(jeu[xInit][yInit] == true){
+                    possible = false;
+                }
+                else{
+                    jeu[xInit][yInit] = true;
+                    
+                    if (calculatePath(xInit,yInit + 1,xFinal,yFinal, jeu) || calculatePath(xInit,yInit - 1,xFinal,yFinal, jeu) || calculatePath(xInit + 1,yInit,xFinal,yFinal, jeu) || calculatePath(xInit,yInit + 1,xFinal,yFinal, jeu)) {
+                        possible = true;
+                    }
+                }
+            }
+//
+        }
+        return possible;
     }
     
     public char getNextMove(){
