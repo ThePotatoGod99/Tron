@@ -17,9 +17,9 @@ public class AI {
     public char direction;
 
     //Informations de la map
-    public int selfIndice;
-    public int[] allyIndice;
-    public int[] enemyIndice;
+    public int selfIndice = 0;
+    public int[] allyIndice = new int[0];
+    public int[] enemyIndice = new int[0];
     public boolean[][] map;
     public SnakeObject snakes[];
 
@@ -46,14 +46,16 @@ public class AI {
 
         int w, x, h, y;
         for(int i = 0; i < config.getJSONArray("obstacles").length(); i++){
-            w = config.getJSONArray("obstacles").getJSONObject(i).getInt("w");
+            w = config.getJSONArray("obstacles").getJSONObject(i).getInt("w") - 1;
             x = config.getJSONArray("obstacles").getJSONObject(i).getInt("x");
-            h = config.getJSONArray("obstacles").getJSONObject(i).getInt("h");
+            h = config.getJSONArray("obstacles").getJSONObject(i).getInt("h") - 1;
             y = config.getJSONArray("obstacles").getJSONObject(i).getInt("y");
 
-            for(; w >= 0; w--) {
-                for(; h >= 0; h--){
-                    map[x + w][y + h] = true;
+            for(int tw = w; tw >= 0; tw--) {
+                for(int th = h; th >= 0; th--){
+                    if(x + tw >= 0 && y + th >= 0 && x + tw < map.length && y + th < map[0].length) {
+                        map[x + tw][y + th] = true;
+                    }
                 }
             }
         }
@@ -66,7 +68,7 @@ public class AI {
         }
 
         for(int i = 0; i < snakes.length; i++){
-            if(snakes[i].getID().equals(config.getJSONObject("me"))){
+            if(snakes[i].getID().equals(config.getString("me"))){
                 this.selfIndice = i;
             }
         }
@@ -96,6 +98,8 @@ public class AI {
                 enemyIndice = temp;
             }
         }
+
+        //imprimerMap();
     }
 
     /**
@@ -129,5 +133,18 @@ public class AI {
      */
     public void end(String winnerID) {
         System.out.println("Équipe gagnante : " + winnerID);
+    }
+
+    public void imprimerMap(){
+        for(int j = 0; j < map[0].length; j++){
+            System.out.println();
+            for(int i = 0; i < map.length; i++){
+                if(map[i][j]){
+                    System.out.print("X");
+                } else {
+                    System.out.print("O");
+                }
+            }
+        }
     }
 }
