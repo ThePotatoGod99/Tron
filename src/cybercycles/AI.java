@@ -117,48 +117,42 @@ public class AI {
      * @throws org.json.JSONException
      */
     public char next(JSONArray prevMoves) throws JSONException {
-        System.out.print("Mouvements précédents : ");
-
-        for (int i = 0; i < prevMoves.length(); i++) {
-            JSONObject prevMove = prevMoves.getJSONObject(i);
-            System.out.print(prevMove + " ");
-        }
 
         //Update la map et la position des snakes
         {
-            if(!firstTime) {
-                for(int i = 0; i < prevMoves.length(); i++){
-                    int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
+            for(int i = 0; i < prevMoves.length(); i++){
+                int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
 
-                    switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
-                        case 'u':
-                            snakes[index - 1].setY(snakes[index - 1].getY() - 1);
-                            break;
-                        case 'l':
-                            snakes[index - 1].setX(snakes[index - 1].getX() - 1);
-                            break;
-                        case 'd':
-                            snakes[index - 1].setY(snakes[index - 1].getY() + 1);
-                            break;
-                        case 'r':
-                            snakes[index - 1].setX(snakes[index - 1].getX() + 1);
-                            break;
-                    }
+                switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
+                    case 'u':
+                        snakes[index - 1].setY(snakes[index - 1].getY() - 1);
+                        break;
+                    case 'l':
+                        snakes[index - 1].setX(snakes[index - 1].getX() - 1);
+                        break;
+                    case 'd':
+                        snakes[index - 1].setY(snakes[index - 1].getY() + 1);
+                        break;
+                    case 'r':
+                        snakes[index - 1].setX(snakes[index - 1].getX() + 1);
+                        break;
+                }
 
-                    if (snakes[index - 1].getX() >= 0 && snakes[index - 1].getX() < map.length && snakes[index - 1].getY() >= 0 && snakes[index - 1].getY() < map[0].length) {
-                        map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
-                    }
+                if (snakes[index - 1].getX() >= 0 && snakes[index - 1].getX() < map.length && snakes[index - 1].getY() >= 0 && snakes[index - 1].getY() < map[0].length) {
+                    map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
                 }
             }
+
+            //Mid game
+            {
+
+            }
+
+            //Late game
+            {
+
+            }
         }
-
-        imprimerMap();
-
-        System.out.print("\n");
-
-        // Choisis une direction au hasard
-        direction = directions[random.nextInt(directions.length)];
-        System.out.println("Mouvement choisi : " + direction);
 
         return direction;
     }
