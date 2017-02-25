@@ -17,8 +17,11 @@ public class AI {
     public char direction;
 
     //Informations de la map
+    public final int X = 0, Y = 1;
     public boolean[][] map;
-    public int snakePosition[][];
+    public int snakePosition[];
+    public int allyPosition[][];
+    public int enemyPosition[][];
 
     Random random = new Random();
 
@@ -57,7 +60,6 @@ public class AI {
 
         //Initialisation des snakes
         snakePosition = new int[2];
-        snakePosition[X] = config.getJSONArray("players")
     }
 
     /**
