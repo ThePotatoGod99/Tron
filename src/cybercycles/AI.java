@@ -9,8 +9,8 @@ import org.json.JSONObject;
 public class AI {
 
     /* Configuration */
-    public final String ROOM = "";
-    public final String TEAM = "";
+    public final String ROOM = "rocket";
+    public final String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
