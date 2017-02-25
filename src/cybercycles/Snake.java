@@ -24,9 +24,7 @@ public class Snake{
         destination = new Point(0, 0);
         position = new Point(0, 0);
     }
-  //  public boolean calculatePath(int xInit, int yInit, int xFinal, int yFinal, boolean[][] jeu){
-    
-    public void calculatePath(int xInit, int yInit){
+    public boolean calculatePath(int xInit, int yInit, int xFinal, int yFinal, boolean[][] jeu){
 
         int w = jeu.length;
         int h = jeu[0].length;

@@ -27,6 +27,10 @@ public class SnakeObject {
         this.y = y;
     }
 
+    public String getID(){ return ID; }
+
+    public String getTEAM(){ return TEAM; }
+
     public String toString(){
         return "{x: " + x + "; y: " + y + "; ID: " + ID + "; TEAM: " + TEAM + " }";
     }
