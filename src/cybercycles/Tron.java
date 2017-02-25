@@ -16,7 +16,7 @@ public class Tron {
         final String server = "http://" + "kekstarter.org" + ":" + "1337";
 
         final Socket socket = IO.socket(server);
-        final AI ai = new AI();
+        final AI ai = new AI(0);
 
         final String room = System.getProperty("room", ai.ROOM);
         final String team = System.getProperty("team", ai.TEAM);
