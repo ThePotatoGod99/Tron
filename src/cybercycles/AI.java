@@ -9,12 +9,19 @@ import org.json.JSONObject;
 public class AI {
     //Allo
     /* Configuration */
-    public final String ROOM = "rocket";
-    public final String TEAM = "1";
+    public final String ROOM = "rocketA";
+    public final String TEAM = "2";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
     public char direction;
+
+    //Informations de la map
+    public final int X = 0, Y = 1;
+    public boolean[][] map;
+    public int snakePosition[];
+    public int allyPosition[][];
+    public int enemyPosition[][];
 
     Random random = new Random();
 
@@ -33,6 +40,26 @@ public class AI {
         System.out.println(config.getInt("w") + " x " + config.getInt("h"));
 
         System.out.println("Votre identifiant : " + config.getString("me"));
+
+        //Initialisation de la map
+        map = new boolean[config.getInt("w")][config.getInt("h")];
+
+        int w, x, h, y;
+        for(int i = 0; i < config.getJSONArray("obstacles").length(); i++){
+            w = config.getJSONArray("obstacles").getJSONObject(i).getInt("w");
+            x = config.getJSONArray("obstacles").getJSONObject(i).getInt("x");
+            h = config.getJSONArray("obstacles").getJSONObject(i).getInt("h");
+            y = config.getJSONArray("obstacles").getJSONObject(i).getInt("y");
+
+            for(; w >= 0; w--) {
+                for(; h >= 0; h--){
+                    map[x + w][y + h] = true;
+                }
+            }
+        }
+
+        //Initialisation des snakes
+        snakePosition = new int[2];
     }
 
     /**
@@ -54,7 +81,6 @@ public class AI {
 
         // Choisis une direction au hasard
         direction = directions[random.nextInt(directions.length)];
-        
         System.out.println("Mouvement choisi : " + direction);
 
         return direction;
