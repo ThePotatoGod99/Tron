@@ -152,20 +152,18 @@ public class AI {
                     }
                 }
             }
-        } else {
-            //Mid game
+        }
+
+        //Mid game
+        {
             double distance;
             if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
                 distance = getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY());
 
                 if(distance < 1.25){
-                    if(snakes[enemyIndice[0]].getX() == snakes[selfIndice].getX()){
-                        getBestChoice('u', 'd');
-                    } else {
-                        getBestChoice('l', 'r');
-                    }
-                } else if(distance < 1.75){
 
+                } else if(distance < 1.75){
+                    //L'algorithme de early est ok pour ça
                 } else if(distance < 2.25){
 
                 }
