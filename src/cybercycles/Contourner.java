@@ -230,21 +230,22 @@ public class Contourner{
     }
 
     public static int convertToInt(char direction){
-        switch(direction){
+        int result = direction;
+        switch(result){
             case 'r':
-                direction = 1;
+                result = 1;
                 break;
             case 'l':
-                direction = 2;
+                result = 2;
                 break;
             case 'u':
-                direction = 3;
+                result = 3;
                 break;
             case 'd':
-                direction = 4;
+                result = 4;
                 break;
         }
-        return direction;
+        return result;
     }
     
     public static char convert(int direction){
