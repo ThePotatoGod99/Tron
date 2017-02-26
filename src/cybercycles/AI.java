@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "teamRockasdfasdfetdfgsdfgsd";
-    public String TEAM = "1";
+    public String TEAM = "2";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -127,7 +127,7 @@ public class AI {
                     break;
             }
 
-            if (!snakes[i].isDead() && (snakes[i].getX() < 0 || snakes[i].getX() > map.length || snakes[i].getY() < 0 || snakes[i].getY() > map.length || map[snakes[i].getX()][snakes[i].getY()])) {
+            if (!snakes[i].isDead() && ((snakes[i].getX() < 0 || snakes[i].getX() > map.length || snakes[i].getY() < 0 || snakes[i].getY() > map.length || map[snakes[i].getX()][snakes[i].getY()]))) {
                 snakes[i].setDead();
             }
 
@@ -138,22 +138,22 @@ public class AI {
 
         //Calcul pour voir si on est toujours dans le mid game
         if(TEAM == "2"){
-            direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
         } else {
-            if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
+            if ((!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0])) || (!snakes[enemyIndice[0]].isDead() || snakes[enemyIndice[1]].isDead()))) {
                 direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[0]].getX(), snakes[enemyIndice[0]].getY());
             } else if (!snakes[enemyIndice[1]].isDead()) {
                 direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[1]].getX(), snakes[enemyIndice[1]].getY());
             }
 
             //Late game
-            if (Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY())) {
+            if ((getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY()) > 2.5 || getDistance(snakes[enemyIndice[1]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[1]].getY(), snakes[selfIndice].getY()) > 2.5) && Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY())) {
                 for (int i = 0; i < allyIndice.length; i++) {
                     if (!snakes[i].isDead()) {
                         if (Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {
-                            direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                         } else {
-                            direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                         }
                     }
                 }
@@ -166,28 +166,19 @@ public class AI {
                     distance = getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY());
 
                     if (distance < 1.25) {
-
-                    } else if (distance < 1.75) {
-                        //L'algorithme de early est ok pour ça
-                    } else if (distance < 2.25) {
-
+                        direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     }
                 } else if (!snakes[enemyIndice[1]].isDead()) {
                     distance = getDistance(snakes[enemyIndice[1]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[1]].getY(), snakes[selfIndice].getY());
 
                     if (distance < 1.25) {
-
-                    } else if (distance < 1.75) {
-                        //L'algorithme de early est ok pour ça
-                    } else if (distance < 2.25) {
-
+                        direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     }
                 }
             }
         }
         // imprimerMap();
 
-        System.out.println(direction + " ASDF ");
         return direction;//Contourner.convert(direction);
     }
 
