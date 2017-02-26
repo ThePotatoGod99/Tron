@@ -1,12 +1,10 @@
 package cybercycles;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 /**
  * Created by Guillaume on 2017-02-25.
  */
-public class Survival extends Snake{
-    public Survival(){
+public class Algo {
+    public Algo(){
         
     }
     
@@ -34,13 +32,11 @@ public class Survival extends Snake{
             y = originalY + possibilities[j][1];
             
             try{
-                if(map[x][y]){
+                if(map[x][y]){//If there is a wall
                     result[0] += 1;
                 }
                 else if(numberOfSteps < 1){
-                    //System.out.println(numberOfSteps);
                     result[1] += otherMoveIsPossible(x, y, numberOfSteps + 1, map)[1];
-                    //  System.out.println(result[1] + " :ASDF");
                 }
                 else{
                     result[1] += 1;
@@ -88,9 +84,7 @@ public class Survival extends Snake{
             }
             
             
-            //System.out.println(" ASDF " + futureX + " : " + futureY);
             if(futureX >= map.length || futureX < 0 || futureY >= map[futureX].length || futureY < 0 || map[futureX][futureY]){//Move is impossible
-                // System.out.println("Move impossible " + i);
                 if(direction == 0){
                     direction = -1;
                 }
@@ -101,9 +95,7 @@ public class Survival extends Snake{
             //calculate if there will be a wall next to future position
             int x = futureX, y = futureY;
             int[] testForOtherMoves = otherMoveIsPossible(x, y, 0, map);
-            //Calculate if you will be able to move after this move
-            //   System.out.println(i + " : " + testForOtherMoves[0] + " : " + testForOtherMoves[1] + " : " + bestMove);
-            if(testForOtherMoves[0] >= bestMove && testForOtherMoves[1] >= 5){
+            if(testForOtherMoves[1] >= 5){
            //     System.out.println(i + " i ");
                 direction = i;//Convertiir to char
                 bestMove = testForOtherMoves[0];

@@ -10,17 +10,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Tron {
-
-    public static void main(String[] args) throws URISyntaxException {
+public class Tron2 {
+    
+    public static void start(int i) throws URISyntaxException {
         final String server = "http://" + "kekstarter.org" + ":" + "1337";
-
+    
         final Socket socket = IO.socket(server);
-        final AI ai = new AI(0);
-
+        final AI ai = new AI(i);
+    
         final String room = System.getProperty("room", ai.ROOM);
         final String team = System.getProperty("team", ai.TEAM);
-
+    
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             public void call(Object... args) {
                 if (!room.isEmpty()) {
@@ -58,7 +58,13 @@ public class Tron {
                 System.exit(0);
             }
         });
-
+    
         socket.connect();
+    }
+
+    public static void main(String[] args) throws URISyntaxException {
+        for(int i = 0; i < 4; i++){
+            start(i);
+        }
     }
 }
