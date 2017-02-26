@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class AI {
     //Allo
     /* Configuration */
-    public final String ROOM = "teamRockasdfasdfetdfgsdfgsd";
+    public final String ROOM = "teamRocket";
     public String TEAM = "1";
 
     /* Déplacement de l'A.I. */
@@ -188,6 +188,9 @@ public class AI {
         // imprimerMap();
 
         System.out.println(direction + " ASDF ");
+        if(TEAM.equals("1")){
+            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+        }
         return direction;//Contourner.convert(direction);
     }
 
