@@ -136,7 +136,7 @@ public class Contourner extends Snake{
         
     }
     
-    public static int calculatePath(boolean[][] map, int posX, int posY, int desX, int desY){
+    public static char calculatePath(boolean[][] map, int posX, int posY, int desX, int desY){
         long startTime = System.currentTimeMillis();
         int direction = 0;
             
@@ -174,7 +174,7 @@ public class Contourner extends Snake{
             if(futureX == desX && futureY == desY){
                // System.out.println(" X " + futureX + " : " + futureY + " ALLO");//"ASDF " + stepsNumber);
                 direction = i;
-                return direction;
+                return convert(direction);
             }
             if(futureX >= map.length || futureX < 0 || futureY >= map[futureX].length || futureY < 0 || map[futureX][futureY]){//Move is impossible
                 //if move possible
@@ -222,6 +222,11 @@ public class Contourner extends Snake{
         System.out.println(totalTime + " ASDF ADGF AD FADS F " + direction);
         
         
+
+        return convert(direction);
+    }
+
+    public static char convert(int direction){
         switch(direction){
             case 1:
                 direction = 'r';
@@ -236,9 +241,8 @@ public class Contourner extends Snake{
                 direction = 'd';
                 break;
         }
-        return direction;
+        return (char)direction;
     }
-    
     public static int numberOfFreeTile(boolean[][] map, int x, int y){
         return 0;
     }
