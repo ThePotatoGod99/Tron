@@ -157,7 +157,7 @@ public class AI {
             }
 
             
-            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+//            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
             switch(direction){
                 case 1:
                     direction = 'r';
