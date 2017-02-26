@@ -12,28 +12,25 @@ public class Early {
         int deltaY = finalY - snakeY;
 
         if (Math.abs(deltaX) < Math.abs(deltaY)){
-            if (deltaY < 0 && map[snakeX][snakeY-1]==false) {
+            if (snakeY != 0 && deltaY < 0 && map[snakeX][snakeY-1]==false) {
                 return 'u';
-            }else if (map[snakeX - 1][snakeY] == false){
+            } else if (snakeX != 0 && map[snakeX - 1][snakeY] == false){
                 return 'l';
-            } else if (map[snakeX + 1][snakeY]== false){
+            } else if (snakeX != map.length-1 && map[snakeX + 1][snakeY]== false){
                 return 'r';
             } else {
                 return 'd';
             }
         } else {
-            if (deltaX < 0 && map[snakeX-1][snakeY]== false){
+            if (deltaX < 0 && snakeX != 0 && map[snakeX-1][snakeY]== false){
                 return 'l';
-            } else if (map[snakeX][snakeY-1]==false){
+            } else if (snakeY != 0 && map[snakeX][snakeY-1]==false){
                 return 'u';
-            } else if (map[snakeX][snakeY+1]==false) {
+            } else if (snakeY != map[0].length - 1 && map[snakeX][snakeY+1]==false) {
                 return 'd';
             } else {
                 return 'r';
             }
-
         }
-
-
     }
 }

@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "teamRocket";
-    public String TEAM = "1";
+    public String TEAM = "2";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -134,14 +134,11 @@ public class AI {
         }
 
         //Calcul pour voir si on est toujours dans le mid game
-        for (int i = 0; i < enemyIndice.length; i++) {
-            if (!snakes[enemyIndice[i]].isDead()) {
-                direction = Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
-                if (direction != 'z') {
-                    break;
-                }
-            }
+        if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
+            direction = Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[0]].getX(), snakes[enemyIndice[0]].getY());
+        } else if(!snakes[enemyIndice[1]].isDead()){
+            direction = Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[1]].getX(), snakes[enemyIndice[1]].getY());
         }
 
         //Late game
@@ -157,12 +154,35 @@ public class AI {
             }
         } else {
             //Mid game
-            for (int i = 0; i < enemyIndice.length; i++) {
-                //Si il est en avant de l'autre
-
-                //Si il est en avant
+            if
+            if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
+                if(snakes[enemyIndice[0]].getX() == snakes[selfIndice].getX() || snakes[enemyIndice[0]].getY() == snakes[selfIndice].getY()){
+                    if(snakes[selfIndice].getX() - snakes[enemyIndice[0]].getX() == 2){
+                        direction = 'l';
+                    } else if(snakes[selfIndice].getX() - snakes[enemyIndice[0]].getX() == -2){
+                        direction = 'r';
+                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[0]].getY() == 2){
+                        direction = 'u';
+                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[0]].getY() == -2){
+                        direction = 'd';
+                    }
+                }
+            } else if(!snakes[enemyIndice[1]].isDead()){
+                if(snakes[enemyIndice[1]].getX() == snakes[selfIndice].getX() || snakes[enemyIndice[1]].getY() == snakes[selfIndice].getY()){
+                    if(snakes[selfIndice].getX() - snakes[enemyIndice[1]].getX() == 2){
+                        direction = 'l';
+                    } else if(snakes[selfIndice].getX() - snakes[enemyIndice[1]].getX() == -2){
+                        direction = 'r';
+                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[1]].getY() == 2){
+                        direction = 'u';
+                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[1]].getY() == -2){
+                        direction = 'd';
+                    }
+                }
             }
         }
+
+        imprimerMap();
 
         return direction;
     }
@@ -201,5 +221,12 @@ public class AI {
                 }
             }
         }
+    }
+
+    private boolean isCloser(int enemyIndice){
+        double distance1 = Math.sqrt((snakes[selfIndice].getX() - snakes[enemyIndice].getX()) * (snakes[selfIndice].getX() - snakes[enemyIndice].getX()) + (snakes[selfIndice].getY() - snakes[enemyIndice].getY()) * (snakes[selfIndice].getY() - snakes[enemyIndice].getY()));
+        double distance2 = Math.sqrt((snakes[selfIndice].getX() - snakes[enemyIndice].getX()) * (snakes[selfIndice].getX() - snakes[enemyIndice].getX()) + (snakes[selfIndice].getY() - snakes[enemyIndice].getY()) * (snakes[selfIndice].getY() - snakes[enemyIndice].getY()));
+
+        return (distance1 >= distance2);
     }
 }
