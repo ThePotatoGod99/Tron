@@ -50,6 +50,7 @@ public class Tron2 {
         }).on("end", new Emitter.Listener() {
             public void call(Object... args) {
                 ai.end((String) args[0]);
+               
                 System.exit(0);
             }
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
@@ -67,4 +68,5 @@ public class Tron2 {
             start(i);
         }
     }
+    
 }

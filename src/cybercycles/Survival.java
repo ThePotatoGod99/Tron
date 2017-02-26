@@ -127,15 +127,13 @@ public class Survival {
                 if(x == 0 || x == 5 || y == 0 || y == 5){
                     line[y] = true;
                 }
+                if(x == 4 && y != 2){
+                    line[y] = true;
+                }
             }
             map[x] = line;
         }
         
-        line = new boolean[6];
-        for(int a = 0; a <= 3; a++){
-            line[a] = true;
-        }
-        map[3] = line;
         
         boolean condition = true;
         while(condition){
