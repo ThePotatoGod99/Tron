@@ -142,7 +142,7 @@ public class AI {
         }
 
         //Late game
-        if (direction == 'z') {
+        if (Early.enclos()) {
             for (int i = 0; i < allyIndice.length; i++) {
                 if (!snakes[i].isDead()) {
                     if (Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {
@@ -154,29 +154,34 @@ public class AI {
             }
         } else {
             //Mid game
+            double distance;
             if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
-                if(snakes[enemyIndice[0]].getX() == snakes[selfIndice].getX() || snakes[enemyIndice[0]].getY() == snakes[selfIndice].getY()){
-                    if(snakes[selfIndice].getX() - snakes[enemyIndice[0]].getX() == 2){
-                        direction = 'l';
-                    } else if(snakes[selfIndice].getX() - snakes[enemyIndice[0]].getX() == -2){
-                        direction = 'r';
-                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[0]].getY() == 2){
-                        direction = 'u';
-                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[0]].getY() == -2){
-                        direction = 'd';
+                distance = getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY());
+
+                if(distance < 1.25){
+                    if(snakes[enemyIndice[0]].getX() == snakes[selfIndice].getX()){
+                        getBestChoice('u', 'd');
+                    } else {
+                        getBestChoice('l', 'r');
                     }
+                } else if(distance < 1.75){
+
+                } else if(distance < 2.25){
+
                 }
             } else if(!snakes[enemyIndice[1]].isDead()){
-                if(snakes[enemyIndice[1]].getX() == snakes[selfIndice].getX() || snakes[enemyIndice[1]].getY() == snakes[selfIndice].getY()){
-                    if(snakes[selfIndice].getX() - snakes[enemyIndice[1]].getX() == 2){
-                        direction = 'l';
-                    } else if(snakes[selfIndice].getX() - snakes[enemyIndice[1]].getX() == -2){
-                        direction = 'r';
-                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[1]].getY() == 2){
-                        direction = 'u';
-                    } else if(snakes[selfIndice].getY() - snakes[enemyIndice[1]].getY() == -2){
-                        direction = 'd';
+                distance = getDistance(snakes[enemyIndice[1]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[1]].getY(), snakes[selfIndice].getY());
+
+                if(distance < 1.25){
+                    if(snakes[enemyIndice[1]].getX() == snakes[selfIndice].getX()){
+                        getBestChoice('u', 'd');
+                    } else {
+                        getBestChoice('l', 'r');
                     }
+                } else if(distance < 1.75){
+
+                } else if(distance < 2.25){
+
                 }
             }
         }
@@ -223,10 +228,18 @@ public class AI {
         }
     }
 
+    private double getDistance(int x1, int y1, int x2, int y2){
+        return Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+    }
+
     private boolean isCloser(int enemyIndice){
         double distance1 = Math.sqrt((snakes[selfIndice].getX() - snakes[enemyIndice].getX()) * (snakes[selfIndice].getX() - snakes[enemyIndice].getX()) + (snakes[selfIndice].getY() - snakes[enemyIndice].getY()) * (snakes[selfIndice].getY() - snakes[enemyIndice].getY()));
         double distance2 = Math.sqrt((snakes[selfIndice].getX() - snakes[enemyIndice].getX()) * (snakes[selfIndice].getX() - snakes[enemyIndice].getX()) + (snakes[selfIndice].getY() - snakes[enemyIndice].getY()) * (snakes[selfIndice].getY() - snakes[enemyIndice].getY()));
 
         return (distance1 >= distance2);
+    }
+
+    private char getBestChoice(char c1, char c2){
+        return 'Z';
     }
 }
