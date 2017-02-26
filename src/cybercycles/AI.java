@@ -154,7 +154,6 @@ public class AI {
             }
         } else {
             //Mid game
-            if
             if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
                 if(snakes[enemyIndice[0]].getX() == snakes[selfIndice].getX() || snakes[enemyIndice[0]].getY() == snakes[selfIndice].getY()){
                     if(snakes[selfIndice].getX() - snakes[enemyIndice[0]].getX() == 2){
@@ -183,6 +182,7 @@ public class AI {
         }
 
         imprimerMap();
+        
 
         return direction;
     }

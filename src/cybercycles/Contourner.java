@@ -139,7 +139,7 @@ public class Contourner extends Snake{
     public static int calculatePath(boolean[][] map, int posX, int posY, int desX, int desY){
         long startTime = System.currentTimeMillis();
         int direction = 0;
-        
+            
         int futureX = posX, futureY = posY;
         
         int[] moveReward = new int[4];
