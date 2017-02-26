@@ -230,6 +230,9 @@ public class AI{
         }*/
         
         System.out.println(direction + " ASDF ");
+        if(TEAM.equals("1")){
+            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+        }
         return direction;//Contourner.convert(direction);
     }
     

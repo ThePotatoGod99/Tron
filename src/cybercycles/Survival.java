@@ -56,7 +56,7 @@ public class Survival {
         
     }
     
-    public static int calculatePath(boolean[][] map, int posX, int posY){
+    public static char calculatePath(boolean[][] map, int posX, int posY){
         int direction = 0;
         int futureX = posX, futureY = posY;
         
