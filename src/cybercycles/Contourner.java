@@ -3,7 +3,7 @@ package cybercycles;
 /**
  * Created by Guillaume on 2017-02-25.
  */
-public class Contourner extends Snake{
+public class Contourner{
     
     
     public Contourner(){
@@ -137,6 +137,9 @@ public class Contourner extends Snake{
     }
     
     public static char calculatePath(boolean[][] map, int posX, int posY, int desX, int desY){
+        if(posX == desX && posY == desY){
+            return 'z';
+        }
         long startTime = System.currentTimeMillis();
         int direction = 0;
             
@@ -219,13 +222,31 @@ public class Contourner extends Snake{
        
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        System.out.println(totalTime + " ASDF ADGF AD FADS F " + direction);
+        //System.out.println(totalTime + " ASDF ADGF AD FADS F " + direction);
         
         
 
         return convert(direction);
     }
 
+    public static int convertToInt(char direction){
+        switch(direction){
+            case 'r':
+                direction = 1;
+                break;
+            case 'l':
+                direction = 2;
+                break;
+            case 'u':
+                direction = 3;
+                break;
+            case 'd':
+                direction = 4;
+                break;
+        }
+        return direction;
+    }
+    
     public static char convert(int direction){
         switch(direction){
             case 1:

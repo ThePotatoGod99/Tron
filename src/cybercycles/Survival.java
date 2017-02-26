@@ -5,7 +5,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 /**
  * Created by Guillaume on 2017-02-25.
  */
-public class Survival extends Snake{
+public class Survival {
     public Survival(){
         
     }
@@ -58,16 +58,12 @@ public class Survival extends Snake{
     
     public static int calculatePath(boolean[][] map, int posX, int posY){
         int direction = 0;
-        int snakeX = posX;
-        int snakeY = posY;
+        int futureX = posX, futureY = posY;
         
-        int futureX = snakeX, futureY = snakeY;
-        
-        int[] moveReward = new int[4];
         int bestMove = 0;
         for(int i = 1; i <= 4; i++){//Test chaque direction possible
-            futureX = snakeX;
-            futureY = snakeY;
+            futureX = posX;
+            futureY = posY;
             //Calculate if move is possible
             //  int i = 2;
             switch(i){
@@ -109,7 +105,7 @@ public class Survival extends Snake{
                 bestMove = testForOtherMoves[0];
             }
         }
-        return direction;
+        return Contourner.convert(direction);
     }
     
     public static int numberOfFreeTile(boolean[][] map, int x, int y){
@@ -145,8 +141,8 @@ public class Survival extends Snake{
         while(condition){
             int direction = 0;
             
-            //imprimerMap(map, posX, posY);
-            // System.out.println("\n");
+            imprimerMap(map, posX, posY);
+             System.out.println("\n");
             direction = calculatePath(map, posX, posY);
             map[posX][posY] = true;
             switch(direction){
