@@ -13,21 +13,21 @@ public class Early {
 
         if (Math.abs(deltaX) < Math.abs(deltaY)){
             if (deltaY < 0 && map[snakeX][snakeY-1]==false) {
-                return 'd';
+                return 'u';
             }else if (map[snakeX - 1][snakeY] == false){
                 return 'l';
             } else if (map[snakeX + 1][snakeY]== false){
                 return 'r';
             } else {
-                return 'u';
+                return 'd';
             }
         } else {
             if (deltaX < 0 && map[snakeX-1][snakeY]== false){
                 return 'l';
             } else if (map[snakeX][snakeY-1]==false){
-                return 'd';
-            } else if (map[snakeX][snakeY+1]==false) {
                 return 'u';
+            } else if (map[snakeX][snakeY+1]==false) {
+                return 'd';
             } else {
                 return 'r';
             }
