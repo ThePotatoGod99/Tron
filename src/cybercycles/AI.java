@@ -138,14 +138,9 @@ public class AI {
                     map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
                 }
             }
-
-<<<<<<< HEAD
-            switch (direction) {
-=======
-            
 //            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
             switch(direction){
->>>>>>> upstream/master
+
                 case 1:
                     direction = 'r';
                     break;
@@ -162,7 +157,7 @@ public class AI {
 
             //Calcul pour voir si on est toujours dans le mid game
             for (int i = 0; i < enemyIndice.length; i++) {
-                direction = Early.calculatePath(snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
+                direction = Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
                 if (direction != 'z') {
                     break;
@@ -172,7 +167,7 @@ public class AI {
             //Late game
             if(direction == 'z'){
                 for(int i = 0; i < allyIndice.length; i++){
-                    if(Early.calculatePath(snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z'){
+                    if(Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z'){
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     } else {
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
