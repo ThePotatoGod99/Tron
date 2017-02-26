@@ -10,7 +10,7 @@ public class AI{
     //Allo
     /* Configuration */
     public final String ROOM = "teamRockasdfasdfetdfgsdfgsd";
-    public String TEAM = "1";
+    public String TEAM = "2";
     
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -141,7 +141,7 @@ public class AI{
         }
         
         //Calcul pour voir si on est toujours dans le mid game
-/*
+
         if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
             direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[0]].getX(), snakes[enemyIndice[0]].getY());
         } else if(!snakes[enemyIndice[1]].isDead()){
@@ -149,7 +149,7 @@ public class AI{
         }
         
         //Late game
-        if (Early.enclos()) {
+        if (Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY())) {
             for (int i = 0; i < allyIndice.length; i++) {
                 if (!snakes[i].isDead()) {
                     if (Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {
@@ -190,32 +190,10 @@ public class AI{
                 }
             }
         }
-*/
-        
-        if(id == 1){
-            direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), 15, 15);
-            if(direction == 'z'){
-                id = 5;
-                direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-                
-            }
-        }
-        else if(id == 3){
-            direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), 20, 20);
-            if(direction == 'z'){
-                id = 5;
-                direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-                
-            }
-            
-        }
-        
-        else{
-            direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-        }
+
         // imprimerMap();
-        
-        
+
+        /*
         int futureX = snakes[selfIndice].getX();
         int futureY = snakes[selfIndice].getY();
         //Calculate if move is possible
@@ -249,8 +227,7 @@ public class AI{
                 
                 break;
             }
-        }
-        
+        }*/
         
         System.out.println(direction + " ASDF ");
         return direction;//Contourner.convert(direction);
