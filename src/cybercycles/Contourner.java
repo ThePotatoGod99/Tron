@@ -220,6 +220,22 @@ public class Contourner extends Snake{
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println(totalTime + " ASDF ADGF AD FADS F " + direction);
+        
+        
+        switch(direction){
+            case 1:
+                direction = 'r';
+                break;
+            case 2:
+                direction = 'l';
+                break;
+            case 3:
+                direction = 'u';
+                break;
+            case 4:
+                direction = 'd';
+                break;
+        }
         return direction;
     }
     
