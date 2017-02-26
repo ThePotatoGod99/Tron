@@ -3,9 +3,23 @@ package cybercycles;
 /**
  * Created by Guillaume on 2017-02-25.
  */
-public class Algo {
-    public Algo(){
+public class Algo{
+    
+    boolean[][] map;
+    int x = 0, y = 0;
+    
+    
+    char[] moves;
+    int step = 0;
+    int movesLenght = 3;
+    
+    public Algo(boolean[][] map, int x, int y){
+        this.map = map;
+        this.x = x;
+        this.y = y;
         
+        moves = new char[10];
+        calculatePath(0, x, y);
     }
     
     /*
@@ -14,6 +28,42 @@ public class Algo {
     3: top
     4: bot
      */
+    
+    public int calculatePath(int numberOfSteps, int x, int y){
+        System.out.println("ASDF");
+        int numberPossibleMove = 0;
+        int[][] possibilities = {
+                {1, 0},
+                {0, 1},
+                {-1, 0},
+                {0, -1},
+                {1, 1},
+                {-1, 1},
+                {-1, -1},
+                {1, -1}
+        };
+        int originalX = x, originalY = y;
+        int[] result = {0, 0};
+        for(char j = 0; j < 8; j++){//test all squares surounding future pos
+            x = originalX + possibilities[j][0];
+            y = originalY + possibilities[j][1];
+            
+            try{
+                if(map[x][y]){//If there is a wall
+                }
+                else if(numberOfSteps < 3){
+                    moves[numberOfSteps] = j;
+                    numberPossibleMove += calculatePath(numberOfSteps + 1, x, y);
+                }
+            }
+            catch(ArrayIndexOutOfBoundsException e){
+                
+            }
+        }
+        return numberPossibleMove;
+        
+    }
+    
     public static int[] otherMoveIsPossible(int x, int y, int numberOfSteps, boolean[][] map){//Has wall next to it; has other possible move
         int[][] possibilities = {
                 {1, 0},
@@ -27,9 +77,26 @@ public class Algo {
         };
         int originalX = x, originalY = y;
         int[] result = {0, 0};
-        for(int j = 0; j < 8; j++){//test all squares surounding future pos
-            x = originalX + possibilities[j][0];
-            y = originalY + possibilities[j][1];
+        for(int j = 1; j <= 4; j++){//test all squares surounding future pos
+    
+            switch(j){
+                //get future position
+                case 1:
+                    x++;
+                    break;
+        
+                case 2:
+                    x--;
+                    break;
+                case 3:
+                    y--;
+                    break;
+                case 4:
+                    y++;
+                    break;
+            }
+//            x = originalX + possibilities[j][0];
+//            y = originalY + possibilities[j][1];
             
             try{
                 if(map[x][y]){//If there is a wall
@@ -53,6 +120,9 @@ public class Algo {
     }
     
     public static int calculatePath(boolean[][] map, int posX, int posY){
+        Algo algo = new Algo(map, posX, posY);
+        
+        /*
         int direction = 0;
         int snakeX = posX;
         int snakeY = posY;
@@ -60,7 +130,8 @@ public class Algo {
         int futureX = snakeX, futureY = snakeY;
         
         int[] moveReward = new int[4];
-        int bestMove = 0;
+        int bestMove = 0; //Walls
+        int bestMove2 = 0; //
         for(int i = 1; i <= 4; i++){//Test chaque direction possible
             futureX = snakeX;
             futureY = snakeY;
@@ -99,10 +170,42 @@ public class Algo {
            //     System.out.println(i + " i ");
                 direction = i;//Convertiir to char
                 bestMove = testForOtherMoves[0];
+                bestMove2 = testForOtherMoves[1];
             }
+        }*/
+        
+        
+        return 0;//direction;
+    }
+    
+    public char getNextMove(){
+        char direction = 0;
+        
+        if(step < moves.length){
+            direction = moves[step];
         }
+        
+        step++;
+        switch(direction){
+            case 1:
+                direction = 'r';
+                break;
+            case 2:
+                direction = 'l';
+                break;
+            case 3:
+                direction = 'u';
+                break;
+            case 4:
+                direction = 'd';
+                break;
+        }
+        System.out.println(direction);
+        
+        
         return direction;
     }
+    
     
     public static int numberOfFreeTile(boolean[][] map, int x, int y){
         return 0;
@@ -137,8 +240,8 @@ public class Algo {
         while(condition){
             int direction = 0;
             
-            //imprimerMap(map, posX, posY);
-            // System.out.println("\n");
+            imprimerMap(map, posX, posY);
+            System.out.println("\n");
             direction = calculatePath(map, posX, posY);
             map[posX][posY] = true;
             switch(direction){

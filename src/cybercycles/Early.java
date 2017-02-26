@@ -4,6 +4,7 @@ package cybercycles;
  * Created by Guillaume on 2017-02-25.
  */
 public class Early {
+
     public static boolean calculatePath(boolean[][] map, int inix, int iniy){
         //8 if de 2 if
         if (map[inix][iniy-1]== true){
@@ -41,5 +42,5 @@ public class Early {
         }
             return false;
 
-    }
+   
 }
