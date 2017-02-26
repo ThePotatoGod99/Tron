@@ -228,6 +228,10 @@ public class AI{
                 break;
             }
         }*/
+
+        if(TEAM == "2"){
+            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+        }
         
         System.out.println(direction + " ASDF ");
         if(TEAM.equals("1")){
