@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "teamRocket";
-    public  String TEAM = "1";
+    public String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -25,36 +25,26 @@ public class AI {
 
     Random random = new Random();
 
-    //Informations pour run()
-    public boolean firstTime;
-    /**
-     * Fonction appelée en début de partie.
-     *
-     * @param config Configuration de la grille de jeu
-     * @throws org.json.JSONException
-     */
-    
-    public AI(int i){
-        if(i==0){
-            
-        }
-        else if(i <= 1){
+    public AI(int i) {
+        if (i == 0) {
+
+        } else if (i <= 1) {
             TEAM = 1 + "";
-        }
-        else{
+        } else {
             TEAM = 2 + "";
         }
         System.out.println(TEAM);
     }
+
     public void start(JSONObject config) throws JSONException {
         //System.out.println("Joueurs : " + config.getJSONArray("players"));
 
-      //  System.out.println("Obstacles : " + config.getJSONArray("obstacles"));
+        //  System.out.println("Obstacles : " + config.getJSONArray("obstacles"));
 
-       // System.out.print("Taille de la grille : ");
-      //  System.out.println(config.getInt("w") + " x " + config.getInt("h"));
+        // System.out.print("Taille de la grille : ");
+        //  System.out.println(config.getInt("w") + " x " + config.getInt("h"));
 
-       // System.out.println("Votre identifiant : " + config.getString("me"));
+        // System.out.println("Votre identifiant : " + config.getString("me"));
 
         //Initialisation de la map
         map = new boolean[config.getInt("w")][config.getInt("h")];
@@ -79,7 +69,7 @@ public class AI {
         snakes = new SnakeObject[config.getJSONArray("players").length()];
         for (int i = 0; i < snakes.length; i++) {
             int temp = Integer.valueOf(config.getJSONArray("players").getJSONObject(i).getString("id")) - 1;
-           // System.out.println(temp);
+            // System.out.println(temp);
             snakes[temp] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
                     config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
         }
@@ -122,18 +112,11 @@ public class AI {
         }
     }
 
-    /**
-     * Fonction appelée à chaque tour de jeu.
-     *
-     * @param prevMoves Mouvements précédents des joueurs
-     * @return Mouvement à effectuer
-     * @throws org.json.JSONException
-     */
     public char next(JSONArray prevMoves) throws JSONException {
 
         //Update la map et la position des snakes
         {
-            for(int i = 0; i < prevMoves.length(); i++){
+            for (int i = 0; i < prevMoves.length(); i++) {
                 int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
 
                 switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
@@ -156,9 +139,7 @@ public class AI {
                 }
             }
 
-            
-            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-            switch(direction){
+            switch (direction) {
                 case 1:
                     direction = 'r';
                     break;
@@ -174,19 +155,23 @@ public class AI {
             }
 
             //Mid game
-            {
-                for(int i = 0; i < enemyIndice.length; i++){
-                    direction = calculatePath(snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
-                    if (direction != z) {
-                        break;
-                    }
+            for (int i = 0; i < enemyIndice.length; i++) {
+                direction = Early.calculatePath(snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
+
+                if (direction != 'z') {
+                    break;
                 }
             }
 
-            //Late game
-            {
-
+            if(direction == 'z'){
+                for(int i = 0; i < allyIndice.length; i++){
+                    if(Early.calculatePath(snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z'){
+                        direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                    } else {
+                        direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                    }
+                }
             }
         }
 
@@ -227,17 +212,5 @@ public class AI {
                 }
             }
         }
-    }
-
-    public boolean condition1(){
-
-    }
-
-    public boolean condition2(){
-
-    }
-
-    public boolean condition3(){
-
     }
 }
