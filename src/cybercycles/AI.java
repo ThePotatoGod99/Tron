@@ -139,7 +139,13 @@ public class AI {
                 }
             }
 
+<<<<<<< HEAD
             switch (direction) {
+=======
+            
+//            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+            switch(direction){
+>>>>>>> upstream/master
                 case 1:
                     direction = 'r';
                     break;
