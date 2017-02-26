@@ -154,8 +154,7 @@ public class AI {
                     break;
             }
 
-            //Mid game
-
+            //Calcul pour voir si on est toujours dans le mid game
             for (int i = 0; i < enemyIndice.length; i++) {
                 direction = Early.calculatePath(snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
@@ -164,6 +163,7 @@ public class AI {
                 }
             }
 
+            //Late game
             if(direction == 'z'){
                 for(int i = 0; i < allyIndice.length; i++){
                     if(Early.calculatePath(snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z'){
@@ -171,6 +171,13 @@ public class AI {
                     } else {
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     }
+                }
+            } else {
+                //Mid game
+                for(int i = 0; i < enemyIndice.length; i++){
+                    //Si il est en avant de l'autre
+
+                    //Si il est en avant
                 }
             }
         }
