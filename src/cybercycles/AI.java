@@ -37,15 +37,6 @@ public class AI {
     }
 
     public void start(JSONObject config) throws JSONException {
-        //System.out.println("Joueurs : " + config.getJSONArray("players"));
-
-        //  System.out.println("Obstacles : " + config.getJSONArray("obstacles"));
-
-        // System.out.print("Taille de la grille : ");
-        //  System.out.println(config.getInt("w") + " x " + config.getInt("h"));
-
-        // System.out.println("Votre identifiant : " + config.getString("me"));
-
         //Initialisation de la map
         map = new boolean[config.getInt("w")][config.getInt("h")];
 
@@ -69,7 +60,6 @@ public class AI {
         snakes = new SnakeObject[config.getJSONArray("players").length()];
         for (int i = 0; i < snakes.length; i++) {
             int temp = Integer.valueOf(config.getJSONArray("players").getJSONObject(i).getString("id")) - 1;
-            // System.out.println(temp);
             snakes[temp] = new SnakeObject(config.getJSONArray("players").getJSONObject(i).getInt("x"), config.getJSONArray("players").getJSONObject(i).getInt("y"),
                     config.getJSONArray("players").getJSONObject(i).getString("id"), config.getJSONArray("players").getJSONObject(i).getString("team"));
         }
@@ -113,73 +103,64 @@ public class AI {
     }
 
     public char next(JSONArray prevMoves) throws JSONException {
+        direction = 'z';
 
         //Update la map et la position des snakes
-        {
-            for (int i = 0; i < prevMoves.length(); i++) {
-                int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
+        for (int i = 0; i < prevMoves.length(); i++) {
+            int index = Integer.valueOf(prevMoves.getJSONObject(i).getString("id"));
 
-                switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
-                    case 'u':
-                        snakes[index - 1].setY(snakes[index - 1].getY() - 1);
-                        break;
-                    case 'l':
-                        snakes[index - 1].setX(snakes[index - 1].getX() - 1);
-                        break;
-                    case 'd':
-                        snakes[index - 1].setY(snakes[index - 1].getY() + 1);
-                        break;
-                    case 'r':
-                        snakes[index - 1].setX(snakes[index - 1].getX() + 1);
-                        break;
-                }
-
-                if (snakes[index - 1].getX() >= 0 && snakes[index - 1].getX() < map.length && snakes[index - 1].getY() >= 0 && snakes[index - 1].getY() < map[0].length) {
-                    map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
-                }
-            }
-//            direction = (char)Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-            switch(direction){
-
-                case 1:
-                    direction = 'r';
+            switch (prevMoves.getJSONObject(i).getString("direction").charAt(0)) {
+                case 'u':
+                    snakes[index - 1].setY(snakes[index - 1].getY() - 1);
                     break;
-                case 2:
-                    direction = 'l';
+                case 'l':
+                    snakes[index - 1].setX(snakes[index - 1].getX() - 1);
                     break;
-                case 3:
-                    direction = 'u';
+                case 'd':
+                    snakes[index - 1].setY(snakes[index - 1].getY() + 1);
                     break;
-                case 4:
-                    direction = 'd';
+                case 'r':
+                    snakes[index - 1].setX(snakes[index - 1].getX() + 1);
                     break;
             }
 
-            //Calcul pour voir si on est toujours dans le mid game
-            for (int i = 0; i < enemyIndice.length; i++) {
+            if (!snakes[i].isDead() && (snakes[i].getX() < 0 || snakes[i].getX() > map.length || snakes[i].getY() < 0 || snakes[i].getY() > map.length || map[snakes[i].getX()][snakes[i].getY()])) {
+                snakes[i].setDead();
+            }
+
+            if (snakes[index - 1].getX() >= 0 && snakes[index - 1].getX() < map.length && snakes[index - 1].getY() >= 0 && snakes[index - 1].getY() < map[0].length) {
+                map[snakes[index - 1].getX()][snakes[index - 1].getY()] = true;
+            }
+        }
+
+        //Calcul pour voir si on est toujours dans le mid game
+        for (int i = 0; i < enemyIndice.length; i++) {
+            if (!snakes[enemyIndice[i]].isDead()) {
                 direction = Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
                 if (direction != 'z') {
                     break;
                 }
             }
+        }
 
-            //Late game
-            if(direction == 'z'){
-                for(int i = 0; i < allyIndice.length; i++){
-                    if(Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z'){
+        //Late game
+        if (direction == 'z') {
+            for (int i = 0; i < allyIndice.length; i++) {
+                if (!snakes[i].isDead()) {
+                    if (Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     } else {
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     }
                 }
-            } else {
-                //Mid game
-                for(int i = 0; i < enemyIndice.length; i++){
-                    //Si il est en avant de l'autre
+            }
+        } else {
+            //Mid game
+            for (int i = 0; i < enemyIndice.length; i++) {
+                //Si il est en avant de l'autre
 
-                    //Si il est en avant
-                }
+                //Si il est en avant
             }
         }
 

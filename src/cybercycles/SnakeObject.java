@@ -1,12 +1,14 @@
 package cybercycles;
 
 public class SnakeObject {
+    private boolean isDead;
     private int x, y;
     private final String ID, TEAM;
 
     public SnakeObject(int x, int y, String ID, String TEAM){
         setX(x);
         setY(y);
+        isDead = false;
         this.ID = ID;
         this.TEAM = TEAM;
     }
@@ -25,6 +27,14 @@ public class SnakeObject {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead() {
+        isDead = true;
     }
 
     public String getID(){ return ID; }
