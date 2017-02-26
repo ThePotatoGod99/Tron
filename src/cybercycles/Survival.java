@@ -5,7 +5,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 /**
  * Created by Guillaume on 2017-02-25.
  */
-public class Survival {
+public class Survival{
     public Survival(){
         
     }
@@ -37,7 +37,7 @@ public class Survival {
                 if(map[x][y]){
                     result[0] += 1;
                 }
-                else if(numberOfSteps < 1){
+                else if(numberOfSteps <= 1){
                     //System.out.println(numberOfSteps);
                     result[1] += otherMoveIsPossible(x, y, numberOfSteps + 1, map)[1];
                     //  System.out.println(result[1] + " :ASDF");
@@ -85,26 +85,63 @@ public class Survival {
             
             
             //System.out.println(" ASDF " + futureX + " : " + futureY);
-            if(futureX >= map.length-1 || futureX < 0 || futureY >= map[futureX].length-1 || futureY < 0 || map[futureX][futureY]){//Move is impossible
+            if(futureX >= map.length - 1 || futureX < 0 || futureY >= map[futureX].length - 1 || futureY < 0 || map[futureX][futureY]){//Move is impossible
                 // System.out.println("Move impossible " + i);
                 if(direction == 0){
                     direction = -1;
                 }
                 continue;
             }
+            else{
+    
+                //calculate if there will be a wall next to future position
+                int x = futureX, y = futureY;
+                int[] testForOtherMoves = otherMoveIsPossible(x, y, 0, map);
+                //Calculate if you will be able to move after this move
+                //   System.out.println(i + " : " + testForOtherMoves[0] + " : " + testForOtherMoves[1] + " : " + bestMove);
+                if(testForOtherMoves[0] >= bestMove && testForOtherMoves[1] >= 2){
+                    //     System.out.println(i + " i ");
+                    System.out.println(testForOtherMoves[1]);
+                    direction = i;//Convertiir to char
+                    bestMove = testForOtherMoves[0];
+                }
+            }
+    
+        }
+    
+    
+        boolean shouldStop = false;
+        futureX = posX;
+        futureY = posY;
+        for(int l = 1; l <= 4; l++){
+            switch(direction){
+                //get future position
+                case 1:
+                    futureX++;
+                    break;
             
+                case 2:
+                    futureX--;
+                    break;
+                case 3:
+                    futureY--;
+                    break;
+                case 4:
+                    futureY++;
+                    break;
             
-            //calculate if there will be a wall next to future position
-            int x = futureX, y = futureY;
-            int[] testForOtherMoves = otherMoveIsPossible(x, y, 0, map);
-            //Calculate if you will be able to move after this move
-            //   System.out.println(i + " : " + testForOtherMoves[0] + " : " + testForOtherMoves[1] + " : " + bestMove);
-            if(testForOtherMoves[0] >= bestMove && testForOtherMoves[1] >= 5){
-           //     System.out.println(i + " i ");
-                direction = i;//Convertiir to char
-                bestMove = testForOtherMoves[0];
+            }
+        
+            if((futureX == posX && futureY == posY)||futureX >= map.length -1 || futureX < 0 || futureY >= map[futureX].length - 1 || futureY < 0 || map[futureX][futureY]){//Move is impossible
+            
+                direction = Contourner.convert(l);
+            }
+            else{
+            
+                break;
             }
         }
+        
         return Contourner.convert(direction);
     }
     
@@ -116,7 +153,7 @@ public class Survival {
 //        TODO remove main
         
         
-        int posX = 2, posY = 1;
+        int posX = 3, posY = 1;
         boolean[][] map = new boolean[6][];
         boolean[] line;
         for(int x = 0; x < 6; x++){
@@ -127,25 +164,23 @@ public class Survival {
                 if(x == 0 || x == 5 || y == 0 || y == 5){
                     line[y] = true;
                 }
+                if(x == 4 && y != 2){
+                    line[y] = true;
+                }
             }
             map[x] = line;
         }
         
-        line = new boolean[6];
-        for(int a = 0; a <= 3; a++){
-            line[a] = true;
-        }
-        map[3] = line;
         
         boolean condition = true;
         while(condition){
-            int direction = 0;
+            char direction = 0;
             
             imprimerMap(map, posX, posY);
-             System.out.println("\n");
+            System.out.println("\n");
             direction = calculatePath(map, posX, posY);
             map[posX][posY] = true;
-            switch(direction){
+            switch(Contourner.convertToInt(direction)){
                 case 1:
                     posX++;
                     break;
@@ -174,25 +209,17 @@ public class Survival {
         for(int j = 0; j < map[0].length; j++){
             System.out.println();
             for(int i = 0; i < map.length; i++){
-                boolean flag = false;
-              /*  for (int z = 0; z < snakes.length; z++) {
-                    if (snakes[z].getX() == i && snakes[z].getY() == j) {
-                        System.out.print(snakes[z].getTEAM().charAt(0));
-                        flag = true;
-                    }
-                }*/
                 
-                if(!flag){
-                    if(map[i][j]){
-                        System.out.print("X");
-                    }
-                    else if(i == x && j == y){
-                        System.out.print("A");
-                    }
-                    else{
-                        System.out.print("O");
-                    }
+                if(map[i][j]){
+                    System.out.print("X");
                 }
+                else if(i == x && j == y){
+                    System.out.print("A");
+                }
+                else{
+                    System.out.print("O");
+                }
+                
             }
         }
     }

@@ -229,19 +229,7 @@ public class AI{
             }
         }*/
 
-        if(id == 0 || id == 1){
-            
-            
-            
-            
-            lastVerification();
-//            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-           // direction = Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), 15, 15);
-        }
-        
-        else{
-            direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-        }
+
         return direction;//Contourner.convert(direction);
     }
     
