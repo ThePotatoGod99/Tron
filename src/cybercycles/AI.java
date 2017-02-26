@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class AI{
     //Allo
     /* Configuration */
-    public final String ROOM = "aaa";
+    public final String ROOM = "aaftjhhja";
     public String TEAM = "1";
     
     /* Déplacement de l'A.I. */
@@ -131,7 +131,7 @@ public class AI{
                     break;
             }
             
-            if(!snakes[i].isDead() && (snakes[i].getX() < 0 || snakes[i].getX() > map.length || snakes[i].getY() < 0 || snakes[i].getY() > map.length || map[snakes[i].getX()][snakes[i].getY()])){
+            if(!snakes[i].isDead() && (snakes[i].getX() < 0 || snakes[i].getX() >= map.length || snakes[i].getY() < 0 || snakes[i].getY() >= map.length || map[snakes[i].getX()][snakes[i].getY()])){
                 snakes[i].setDead();
             }
             
@@ -150,13 +150,13 @@ public class AI{
         
         //Late game
         if (Early.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY())) {
+
             for (int i = 0; i < allyIndice.length; i++) {
-                if (!snakes[i].isDead()) {
-                    if (Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {
+               if (!snakes[i].isDead()) {
+                    if (Contourner.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY(), snakes[allyIndice[i]].getX(), snakes[allyIndice[i]].getY()) == 'z') {direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                   } else {
                         direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-                    } else {
-                        direction = (char) Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-                    }
+                   }
                 }
             }
         }
