@@ -10,7 +10,7 @@ public class AI {
     //Allo
     /* Configuration */
     public final String ROOM = "teamRocket";
-    public  String TEAM = "2";
+    public  String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -169,9 +169,16 @@ public class AI {
                     direction = 'd';
                     break;
             }
+
             //Mid game
             {
+                for(int i = 0; i < enemyIndice.length; i++){
+                    direction = calculatePath(snakes[enemyIndice[i]].getX(), snakes[enemyIndice[i]].getY());
 
+                    if (direction != z) {
+                        break;
+                    }
+                }
             }
 
             //Late game
@@ -217,5 +224,17 @@ public class AI {
                 }
             }
         }
+    }
+
+    public boolean condition1(){
+
+    }
+
+    public boolean condition2(){
+
+    }
+
+    public boolean condition3(){
+
     }
 }
