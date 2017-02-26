@@ -85,7 +85,7 @@ public class Survival {
             
             
             //System.out.println(" ASDF " + futureX + " : " + futureY);
-            if(futureX >= map.length || futureX < 0 || futureY >= map[futureX].length || futureY < 0 || map[futureX][futureY]){//Move is impossible
+            if(futureX >= map.length-1 || futureX < 0 || futureY >= map[futureX].length-1 || futureY < 0 || map[futureX][futureY]){//Move is impossible
                 // System.out.println("Move impossible " + i);
                 if(direction == 0){
                     direction = -1;

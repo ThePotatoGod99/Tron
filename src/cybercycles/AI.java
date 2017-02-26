@@ -9,8 +9,8 @@ import org.json.JSONObject;
 public class AI {
     //Allo
     /* Configuration */
-    public final String ROOM = "teamRockasdfasdfetdfgsdfgsd";
-    public String TEAM = "2";
+    public final String ROOM = "aaa";
+    public String TEAM = "1";
 
     /* Déplacement de l'A.I. */
     public final char[] directions = {'u', 'l', 'd', 'r'};
@@ -127,7 +127,9 @@ public class AI {
                     break;
             }
 
+
             if (!snakes[i].isDead() && ((snakes[i].getX() < 0 || snakes[i].getX() > map.length || snakes[i].getY() < 0 || snakes[i].getY() > map.length || map[snakes[i].getX()][snakes[i].getY()]))) {
+
                 snakes[i].setDead();
             }
 
@@ -137,7 +139,8 @@ public class AI {
         }
 
         //Calcul pour voir si on est toujours dans le mid game
-        if(TEAM == "2"){
+
+        if (TEAM == "2") {
             direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
         } else {
             if ((!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0])) || (!snakes[enemyIndice[0]].isDead() || snakes[enemyIndice[1]].isDead()))) {
@@ -155,29 +158,72 @@ public class AI {
                         } else {
                             direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                         }
-                    }
-                }
-            }
 
-            //Mid game
-            {
-                double distance;
-                if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
-                    distance = getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY());
-
-                    if (distance < 1.25) {
-                        direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
-                    }
-                } else if (!snakes[enemyIndice[1]].isDead()) {
-                    distance = getDistance(snakes[enemyIndice[1]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[1]].getY(), snakes[selfIndice].getY());
-
-                    if (distance < 1.25) {
-                        direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
                     }
                 }
             }
         }
+
+        //Mid game
+        {
+            double distance;
+            if (!snakes[enemyIndice[0]].isDead() && (isCloser(enemyIndice[0]) || snakes[enemyIndice[1]].isDead())) {
+                distance = getDistance(snakes[enemyIndice[0]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[0]].getY(), snakes[selfIndice].getY());
+
+
+                if (distance < 1.25) {
+                    direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                }
+            } else if (!snakes[enemyIndice[1]].isDead()) {
+                distance = getDistance(snakes[enemyIndice[1]].getX(), snakes[selfIndice].getX(), snakes[enemyIndice[1]].getY(), snakes[selfIndice].getY());
+
+                if (distance < 1.25) {
+                    direction = Survival.calculatePath(map, snakes[selfIndice].getX(), snakes[selfIndice].getY());
+                }
+
+            }
+        }
+
+
         // imprimerMap();
+
+
+        /*
+        int futureX = snakes[selfIndice].getX();
+        int futureY = snakes[selfIndice].getY();
+        //Calculate if move is possible
+        //  int i = 2;
+        boolean shouldStop = false;
+        
+        for(int l = 1; l <= 4; l++){
+            switch(Contourner.convertToInt(direction)){
+                //get future position
+                case 1:
+                    futureX++;
+                    break;
+        
+                case 2:
+                    futureX--;
+                    break;
+                case 3:
+                    futureY--;
+                    break;
+                case 4:
+                    futureY++;
+                    break;
+        
+            }
+    
+            if(futureX >= map.length || futureX < 0 || futureY >= map[futureX].length || futureY < 0 || map[futureX][futureY]){//Move is impossible
+    
+                direction = Contourner.convert(l);
+            }
+            else{
+                
+                break;
+            }
+        }*/
+
 
         return direction;//Contourner.convert(direction);
     }
@@ -187,6 +233,44 @@ public class AI {
      *
      * @param winnerID ID de l'équipe gagnante
      */
+
+
+    public void lastVerification() {
+
+        int futureX = snakes[selfIndice].getX();
+        int futureY = snakes[selfIndice].getY();
+        //Calculate if move is possible
+        //  int i = 2;
+        boolean shouldStop = false;
+
+        for (int l = 1; l <= 4; l++) {
+            switch (Contourner.convertToInt(direction)) {
+                //get future position
+                case 1:
+                    futureX++;
+                    break;
+
+                case 2:
+                    futureX--;
+                    break;
+                case 3:
+                    futureY--;
+                    break;
+                case 4:
+                    futureY++;
+                    break;
+
+            }
+
+            if (futureX >= map.length || futureX < 0 || futureY >= map[futureX].length || futureY < 0 || map[futureX][futureY]) {//Move is impossible
+
+                direction = Contourner.convert(l);
+            } else {
+
+                break;
+            }
+        }
+    }
 
     public void end(String winnerID) {
         System.out.println("Équipe gagnante : " + winnerID);
@@ -229,5 +313,9 @@ public class AI {
         double distance2 = Math.sqrt((snakes[selfIndice].getX() - snakes[enemyIndice].getX()) * (snakes[selfIndice].getX() - snakes[enemyIndice].getX()) + (snakes[selfIndice].getY() - snakes[enemyIndice].getY()) * (snakes[selfIndice].getY() - snakes[enemyIndice].getY()));
 
         return (distance1 >= distance2);
+    }
+
+    private char getBestChoice(char c1, char c2) {
+        return 'Z';
     }
 }
